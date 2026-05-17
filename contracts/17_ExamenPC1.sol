@@ -9,22 +9,29 @@ contract Biblioteca233310 {
         uint256 id;
         string titulo;
         uint256 anio;
+        bool estado;
     }
 
     Libro[] public libros;
     address public dirContrato = 0xd9145CCE52D386f254917e481eB44e9943F39138;
 
-    constructor() {
+    modifier ejecutadoPor() {
         console.log("Ejecutado por: 233310 - Matias Felipe Alcalde Lavado");
+        _;
     }
 
-    function agregarElemento(uint256 _id, string memory _titulo, uint256 _anio) public {
-        libros.push(Libro(_id, _titulo, _anio));
-        console.log("Ejecutado por: 233310 - Matias Felipe Alcalde Lavado");
+    constructor() ejecutadoPor {
     }
 
-    function contarElementos() public view returns(uint256) {
-        console.log("Ejecutado por: 233310 - Matias Felipe Alcalde Lavado");
+    function agregarElemento(uint256 _id, string memory _titulo, uint256 _anio) public ejecutadoPor {
+        for(uint256 i = 0; i < libros.length; i++) {
+            require(libros[i].id != _id, "Ya existe un libro con ese ID");
+        }
+        require(bytes(_titulo).length > 0, "El titulo no puede ser vacio");
+        libros.push(Libro(_id, _titulo, _anio, true));
+    }
+
+    function contarElementos() public view ejecutadoPor returns(uint256) {
         return libros.length;
     }
 }
