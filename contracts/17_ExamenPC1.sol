@@ -34,4 +34,16 @@ contract Biblioteca233310 {
     function contarElementos() public view ejecutadoPor returns(uint256) {
         return libros.length;
     }
+
+    function inactivarElemento(uint _posicion) public ejecutadoPor {
+        libros[_posicion].estado = false;
+    }
+
+    function pintarElementosActivos() public view ejecutadoPor {
+        for(uint256 i = 0; i < libros.length; i++) {
+            if(libros[i].estado == true) {
+                console.log("Libro activo:", libros[i].id, libros[i].titulo);
+            }
+        }
+    }
 }
